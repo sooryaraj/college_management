@@ -1,30 +1,31 @@
-import 'dart:convert';
-import 'dart:io';
-
-import 'package:auto_size_text/auto_size_text.dart';
-import 'package:college_management/widgets/CameraWidget.dart';
+import 'package:college_management/controllers/CourseScreenController.dart';
+import 'package:college_management/controllers/StaffScreenController.dart';
+import 'package:college_management/controllers/StudentScreenController.dart';
 import 'package:flutter/material.dart';
-import 'package:shimmer/shimmer.dart';
-import 'package:uuid/uuid.dart';
-
-import 'constant.dart';
+import 'package:get/get.dart';
 
 class Utils {
   Utils._();
 
+  static final CourseScreenController _courseScreenController =
+      Get.find<CourseScreenController>();
+  static final StaffScreenControler _staffScreenControler =
+      Get.find<StaffScreenControler>();
+  static final StudentScreenController _studentScreenController =
+      Get.find<StudentScreenController>();
+
   static void displaySnackBar(String message) async {
     await Future.delayed(const Duration(milliseconds: 400));
-    SnackBar(
+    var _snackbar = SnackBar(
       content: Text(message),
+    );
+    ScaffoldMessenger.of(Get.context!).showSnackBar(
+      _snackbar,
     );
   }
 
-  static Widget placeholder() {
-    return Image.asset(Const.placeholder);
-  }
-
   static Widget loader() {
-    return Center(
+    return const Center(
       child: SizedBox(
         child: CircularProgressIndicator(),
         height: 40.0,
@@ -33,107 +34,80 @@ class Utils {
     );
   }
 
-  static PreferredSizeWidget customAppBar() {
+  static PreferredSizeWidget customAppBar(
+      {required String title, required String page}) {
     return AppBar(
-      flexibleSpace: Container(
-        decoration: BoxDecoration(),
-      ),
-      toolbarHeight: 80,
+      automaticallyImplyLeading: false,
+      toolbarHeight: 100,
 
       centerTitle: true,
 
-      title: Row(
+      title: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Flexible(
-            flex: 1,
-            child: Container(
-              // width: 100,
-              decoration: const BoxDecoration(
-                shape: BoxShape.rectangle,
-                color: Colors.white,
-              ),
-              child: const TextField(
-                textAlign: TextAlign.left,
-                decoration: InputDecoration(
-                  hintTextDirection: TextDirection.ltr,
-                  prefixIcon: Icon(Icons.search),
-                  hintText: 'search',
-                  border: InputBorder.none,
+          Row(
+            children: [
+              IconButton(
+                  onPressed: () {
+                    Get.back();
+                  },
+                  icon: const Icon(Icons.arrow_back)),
+              Flexible(
+                flex: 1,
+                child: Container(
+                  // width: 100,
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.rectangle,
+                    color: Colors.white,
+                  ),
+                  child: TextField(
+                    onChanged: (q) {
+                      if (page == 'staff') {
+                        _staffScreenControler.loadCourseDetailsFromLocal(
+                            where: q);
+                      } else if (page == 'student') {
+                        _studentScreenController.loadStudentDetailsFromLocal(
+                            where: q);
+                      } else if (page == 'course') {
+                        _courseScreenController.loadCourseDetailsFromLocal(
+                            where: q);
+                      }
+                    },
+                    textAlign: TextAlign.left,
+                    decoration: const InputDecoration(
+                      hintTextDirection: TextDirection.ltr,
+                      prefixIcon: Icon(Icons.search),
+                      hintText: 'search',
+                      border: InputBorder.none,
+                    ),
+                  ),
                 ),
               ),
-            ),
+              const SizedBox(
+                width: 10,
+              ),
+              Image.asset("assets/images/profile.png"),
+            ],
           ),
-          const SizedBox(
-            width: 10,
-          ),
-          Image.asset("assets/images/profile.png"),
+          Text(title)
         ],
       ),
       // ...
     );
   }
 
-  static Widget loaderWithText(
-      {required String msg, required BuildContext context}) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Card(
-          // color: Colors.black87,
-          elevation: 5,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              const SizedBox(
-                child: CircularProgressIndicator(),
-                height: 30.0,
-                width: 30.0,
-              ),
-              AutoSizeText(
-                msg,
-                maxFontSize: 22,
-                minFontSize: 6,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                softWrap: false,
-                style: TextStyle(fontWeight: FontWeight.w700),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  static Widget getIconButton(color, icon) {
-    return Container(
-      width: 50,
-      height: 50,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(25),
-
-        ///set you real bg color in your content
-        color: color,
-      ),
-      child: Icon(
-        icon,
-        color: Colors.white,
-      ),
-    );
-  }
-
-  static Widget ErrorShimmerLoader() {
-    return SizedBox(
-      width: 50,
-      child: Shimmer.fromColors(
-        baseColor: Colors.grey,
-        highlightColor: Colors.grey.shade400,
-        child: const Text(
-          'Loading',
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontSize: 40.0,
-            fontWeight: FontWeight.bold,
+  static Widget tileText(
+      {required String text, required double width, required Color color}) {
+    return Flexible(
+      child: SizedBox(
+        width: width,
+        child: Padding(
+          padding: const EdgeInsets.all(2.0),
+          child: Text(
+            text,
+            style: TextStyle(color: color),
+            // textAlign: TextAlign.center,
           ),
         ),
       ),
@@ -145,70 +119,5 @@ class Utils {
     if (!currentFocus.hasPrimaryFocus) {
       currentFocus.unfocus();
     }
-  }
-
-  static Future<String> onImageButtonPressed(
-      {BuildContext? context,
-      required CameraType preferredCameraDevice,
-      String? firedFrom}) async {
-    String imgString = "";
-
-    final imagePath = await Navigator.push(
-      context!,
-      // Create the SelectionScreen in the next step.
-      MaterialPageRoute(
-          builder: (context) => CameraWidget(
-                cameraPosition: preferredCameraDevice,
-              )),
-    );
-    if (imagePath == null) {
-      print('cancelled');
-      imgString = "";
-    } else {
-      final bytes = File(imagePath).readAsBytesSync();
-      imgString = base64.encode(bytes);
-    }
-
-    print(imagePath);
-    return imgString;
-  }
-
-  static snackBarWithProgress(
-      {required BuildContext context, required String msg}) {
-    var _snackbar = SnackBar(
-      content: Row(
-        children: <Widget>[
-          const SizedBox(
-            child: CircularProgressIndicator(),
-            height: 20.0,
-            width: 20.0,
-          ),
-          const SizedBox(
-            width: 10,
-          ),
-          Text(msg)
-        ],
-      ),
-      backgroundColor: Theme.of(context).primaryColorLight,
-    );
-    ScaffoldMessenger.of(context).showSnackBar(
-      _snackbar,
-    );
-  }
-
-  static snackBar({required BuildContext context, required String msg}) {
-    var _snackbar = SnackBar(
-      content: Text(msg),
-      duration: const Duration(seconds: 2),
-      backgroundColor: Theme.of(context).primaryColorLight,
-    );
-    ScaffoldMessenger.of(context).showSnackBar(
-      _snackbar,
-    );
-  }
-
-  static String uuid() {
-    var uuid = const Uuid();
-    return uuid.v4();
   }
 }

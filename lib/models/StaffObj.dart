@@ -1,11 +1,11 @@
 // To parse this JSON data, do
 //
-//     final departmentObj = departmentObjFromJson(jsonString);
+//     final staffObj = staffObjFromJson(jsonString);
 
 import 'dart:convert';
 
-class DepartmentObj {
-  DepartmentObj({
+class StaffObj {
+  StaffObj({
     this.staffName,
     this.qualification,
     this.email,
@@ -17,16 +17,16 @@ class DepartmentObj {
   final String? staffName;
   final String? qualification;
   final String? email;
-  final String? phone;
+  final dynamic phone;
   final String? profileImage;
   final String? id;
 
-  factory DepartmentObj.fromRawJson(String str) =>
-      DepartmentObj.fromJson(json.decode(str));
+  factory StaffObj.fromRawJson(String str) =>
+      StaffObj.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  factory DepartmentObj.fromJson(Map<String, dynamic> json) => DepartmentObj(
+  factory StaffObj.fromJson(Map<String, dynamic> json) => StaffObj(
         staffName: json["staff_name"],
         qualification: json["qualification"],
         email: json["email"],

@@ -12,8 +12,10 @@ class MainScreen extends StatelessWidget {
     return SafeArea(
       minimum: const EdgeInsets.all(10.0),
       child: Scaffold(
-        appBar: AppBar(),
-        drawer: const Drawer(),
+        appBar: AppBar(
+          centerTitle: true,
+          title: const Text("College Management"),
+        ),
         body: Center(
           child: SizedBox(
             height: MediaQuery.of(context).size.height / 2,
@@ -51,7 +53,7 @@ class MainScreen extends StatelessWidget {
       {required String title, required BuildContext context}) {
     return SizedBox(
       width: MediaQuery.of(context).size.width / 2.5,
-      height: 60,
+      height: 55,
       child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15.0),
@@ -63,7 +65,7 @@ class MainScreen extends StatelessWidget {
             title,
             textAlign: TextAlign.center,
             style: const TextStyle(
-                color: Colors.white, fontSize: 20, fontWeight: FontWeight.w600),
+                color: Colors.white, fontSize: 22, fontWeight: FontWeight.w600),
           ),
         ),
       ),

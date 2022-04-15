@@ -16,6 +16,9 @@ class StudentObj {
     this.addharcardNo,
     this.address,
     this.id,
+    this.staffName,
+    this.courseName,
+    this.section,
   });
 
   final String? studentName;
@@ -23,11 +26,14 @@ class StudentObj {
   final String? profileImage;
   final String? email;
   final String? department;
-  final String? joiningDate;
+  final dynamic joiningDate;
   final String? tcImage;
-  final String? addharcardNo;
+  final dynamic addharcardNo;
   final String? address;
   final String? id;
+  final String? staffName;
+  final String? courseName;
+  final String? section;
 
   factory StudentObj.fromRawJson(String str) =>
       StudentObj.fromJson(json.decode(str));
@@ -45,6 +51,9 @@ class StudentObj {
         addharcardNo: json["addharcard_no"],
         address: json["address"],
         id: json["id"],
+        staffName: json["staff_name"],
+        courseName: json["course_name"],
+        section: json["section"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -58,5 +67,8 @@ class StudentObj {
         "addharcard_no": addharcardNo,
         "address": address,
         "id": id,
+        "staff_name": staffName,
+        "course_name": courseName,
+        "section": section,
       };
 }

@@ -37,15 +37,10 @@ dependencies:
   get_storage: ^2.0.3
   sembast: ^3.1.1
   http: ^0.13.3
-  jiffy: ^5.0.0
-  shimmer: ^2.0.0
-  camera: ^0.9.4+16
-  cached_network_image: ^3.1.0
-  responsive_sizer: ^3.0.5+1
   auto_size_text: ^3.0.0
-  material_floating_search_bar: ^0.3.6
   get: ^4.6.1
-  progress_state_button: ^1.0.4
+  sembast_sqflite: ^2.0.1
+  sliding_up_panel: ^2.0.0+1
 
 dev_dependencies:
   flutter_test:
