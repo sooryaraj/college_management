@@ -19,7 +19,7 @@ class StaffScreenControler extends GetxController {
     loadCourseDetailsFromLocal();
   }
 
-  void loadstaffDetails() {
+  void loadstaffDetails({required bool reset}) {
     status.value = RetriveState.loading;
     isLoading(true);
     try {
@@ -28,7 +28,7 @@ class StaffScreenControler extends GetxController {
         if (value.isEmpty) {
           status.value = RetriveState.empty;
         } else {
-          dao.insertStaffList(value);
+          dao.insertStaffList(value, reset);
           status.value = RetriveState.success;
         }
       });
@@ -47,7 +47,7 @@ class StaffScreenControler extends GetxController {
       dao.getStaffFromLocal(where: where).then((value) {
         listStaffs.value = value;
         if (value.isEmpty) {
-          loadstaffDetails();
+          loadstaffDetails(reset: true);
         } else {
           status.value = RetriveState.success;
         }

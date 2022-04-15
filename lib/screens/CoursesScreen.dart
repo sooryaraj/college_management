@@ -1,5 +1,6 @@
 import 'package:college_management/controllers/CourseScreenController.dart';
 import 'package:college_management/models/CoursesObj.dart';
+import 'package:college_management/screens/AddCourseScreen.dart';
 import 'package:college_management/utils/Utils.dart';
 import 'package:college_management/utils/constant.dart';
 import 'package:college_management/utils/enums.dart';
@@ -30,9 +31,9 @@ class CoursesScreen extends StatelessWidget {
                   child: FloatingActionButton.small(
                     heroTag: "left",
                     onPressed: () {
-                      Utils.displaySnackBar("filter button pressed");
+                      _courseScreenController.loadCourseDetailsFromLocal();
                     },
-                    child: const Icon(Icons.filter_alt),
+                    child: const Icon(Icons.refresh),
                   ),
                 ),
               ),
@@ -43,7 +44,7 @@ class CoursesScreen extends StatelessWidget {
                   child: FloatingActionButton.small(
                     heroTag: "right",
                     onPressed: () {
-                      Utils.displaySnackBar("add button pressed");
+                      Get.to(() => const AddCourseScreen());
                     },
                     child: const Icon(Icons.add),
                   ),
@@ -51,7 +52,8 @@ class CoursesScreen extends StatelessWidget {
               ),
             ],
           ),
-          appBar: Utils.customAppBar(title: 'Course Details', page: 'course'),
+          appBar:
+              Utils.customAppBar(title: 'Course Details', page: Screen.course),
           body: const StaffDetailsTileHeader(),
         ),
       ),
@@ -85,25 +87,21 @@ class StaffDetailsTileHeader extends StatelessWidget {
               ),
               height: MediaQuery.of(context).size.height * 0.05,
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Utils.tileText(
                       text: "ID", width: width * 0.7, color: Colors.white),
                   Utils.tileText(
                       text: "Course Name",
-                      width: width * 0.15,
+                      width: width * 0.20,
                       color: Colors.white),
                   Utils.tileText(
                       text: "No Of Section",
-                      width: width * 0.15,
+                      width: width * 0.20,
                       color: Colors.white),
                   Utils.tileText(
                       text: "Staff Name",
-                      width: width * 0.15,
-                      color: Colors.white),
-                  Utils.tileText(
-                      text: "Staff Name",
-                      width: width * 0.15,
+                      width: width * 0.20,
                       color: Colors.white),
                 ],
               ),
@@ -144,7 +142,7 @@ class _StaffDetailsViewState extends State<StaffDetailsView> {
           strokeWidth: 3,
           triggerMode: RefreshIndicatorTriggerMode.onEdge,
           onRefresh: () async {
-            _courseScreenController.loadCourseDetails();
+            _courseScreenController.loadCourseDetails(reset: true);
           },
           child: ListView.builder(
             padding: const EdgeInsets.only(bottom: 125),
@@ -189,21 +187,23 @@ class CourseDetailsTile extends StatelessWidget {
           // color: Colors.black87,
           elevation: 0,
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Utils.tileText(
-                  text: data.id!, width: width * 0.07, color: Colors.black),
+                  text: data.id ?? "",
+                  width: width * 0.07,
+                  color: Colors.black),
               Utils.tileText(
                   text: data.courseName ?? "",
-                  width: width * 0.15,
+                  width: width * 0.20,
                   color: Colors.black),
               Utils.tileText(
                   text: data.noSection ?? "",
-                  width: width * 0.15,
+                  width: width * 0.20,
                   color: Colors.black),
               Utils.tileText(
                   text: data.staffName ?? "",
-                  width: width * 0.15,
+                  width: width * 0.20,
                   color: Colors.black),
             ],
           )),

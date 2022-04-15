@@ -21,7 +21,7 @@ class StudentScreenController extends GetxController {
     loadStudentDetailsFromLocal();
   }
 
-  void loadStudentDetails() {
+  void loadStudentDetails({required bool reset}) {
     status.value = RetriveState.loading;
     isLoading(true);
     try {
@@ -30,7 +30,7 @@ class StudentScreenController extends GetxController {
         if (value.isEmpty) {
           status.value = RetriveState.empty;
         } else {
-          dao.insertStudentList(value);
+          dao.insertStudentList(value, reset);
           status.value = RetriveState.success;
         }
       });
@@ -49,7 +49,7 @@ class StudentScreenController extends GetxController {
       dao.getStudentFromLocal(where: where).then((value) {
         listStudents.value = value;
         if (value.isEmpty) {
-          loadStudentDetails();
+          loadStudentDetails(reset: true);
         } else {
           status.value = RetriveState.success;
         }

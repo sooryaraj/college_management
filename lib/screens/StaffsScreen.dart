@@ -1,5 +1,6 @@
 import 'package:college_management/controllers/StaffScreenController.dart';
 import 'package:college_management/models/StaffObj.dart';
+import 'package:college_management/screens/AddStaffScreen.dart';
 import 'package:college_management/utils/Utils.dart';
 import 'package:college_management/utils/constant.dart';
 import 'package:college_management/utils/enums.dart';
@@ -29,10 +30,10 @@ class StaffsScreen extends StatelessWidget {
                     alignment: Alignment.bottomLeft,
                     child: FloatingActionButton.small(
                       onPressed: () {
-                        Utils.displaySnackBar("filter button pressed");
+                        _staffScreenControler.loadCourseDetailsFromLocal();
                       },
                       heroTag: "left",
-                      child: const Icon(Icons.filter_alt),
+                      child: const Icon(Icons.refresh),
                     ),
                   ),
                 ),
@@ -43,7 +44,7 @@ class StaffsScreen extends StatelessWidget {
                     child: FloatingActionButton.small(
                       heroTag: "right",
                       onPressed: () {
-                        Utils.displaySnackBar("add button pressed");
+                        Get.to(() => const AddStaffScreen());
                       },
                       child: const Icon(Icons.add),
                     ),
@@ -51,7 +52,8 @@ class StaffsScreen extends StatelessWidget {
                 ),
               ],
             ),
-            appBar: Utils.customAppBar(title: 'Staff Details', page: 'staff'),
+            appBar:
+                Utils.customAppBar(title: 'Staff Details', page: Screen.staff),
             body: const StaffDetailsTileHeader(),
           ),
         ));
@@ -144,7 +146,7 @@ class _StaffDetailsViewState extends State<StaffDetailsView> {
           strokeWidth: 3,
           triggerMode: RefreshIndicatorTriggerMode.onEdge,
           onRefresh: () async {
-            _staffScreenControler.loadstaffDetails();
+            _staffScreenControler.loadstaffDetails(reset: true);
           },
           child: ListView.builder(
             padding: const EdgeInsets.only(bottom: 125),

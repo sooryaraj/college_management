@@ -1,3 +1,6 @@
+import 'package:college_management/controllers/AddCourseController.dart';
+import 'package:college_management/controllers/AddStaffScreenController.dart';
+import 'package:college_management/controllers/AddStudentController.dart';
 import 'package:college_management/controllers/CourseScreenController.dart';
 import 'package:college_management/controllers/StaffScreenController.dart';
 import 'package:college_management/controllers/StudentScreenController.dart';
@@ -13,6 +16,9 @@ void main() {
   Get.put(StaffScreenControler());
   Get.put(CourseScreenController());
   Get.put(StudentScreenController());
+  Get.put(AddStudentController());
+  Get.put(AddCourseController());
+  Get.put(AddStaffScreenControler());
   runApp(const MyApp());
 }
 

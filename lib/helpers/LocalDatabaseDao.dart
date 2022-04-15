@@ -3,6 +3,7 @@ import 'package:college_management/models/CoursesObj.dart';
 import 'package:college_management/models/StaffObj.dart';
 import 'package:college_management/models/StudentObj.dart';
 import 'package:college_management/utils/constant.dart';
+import 'package:college_management/utils/enums.dart';
 import 'package:sembast/sembast.dart';
 
 class LocalDatabaseDao {
@@ -15,7 +16,7 @@ class LocalDatabaseDao {
   Future<Database> get _db async => await AppDatabase.instance.database;
 
   ///// INSERT BEGIN
-  Future insertStaffList(value, [bool reset = false]) async {
+  Future insertStaffList(List<StaffObj> value, [bool reset = false]) async {
     if (reset) deleteStaff();
     return await Future.wait([
       for (var element in value)
@@ -23,7 +24,7 @@ class LocalDatabaseDao {
     ]);
   }
 
-  Future insertStudentList(value, [bool reset = false]) async {
+  Future insertStudentList(List<StudentObj> value, [bool reset = false]) async {
     if (reset) deleteStudent();
     return await Future.wait([
       for (var element in value)
@@ -31,7 +32,7 @@ class LocalDatabaseDao {
     ]);
   }
 
-  Future insertCourseList(value, [bool reset = false]) async {
+  Future insertCourseList(List<CoursesObj> value, [bool reset = false]) async {
     if (reset) deleteCourse();
     return await Future.wait([
       for (var element in value)
@@ -127,6 +128,21 @@ class LocalDatabaseDao {
     return recordList;
   }
 
+  Future<String?> getLastID({required Screen table}) async {
+    List<RecordSnapshot<int, Map<String, Object?>>> recordSnapshot;
+    if (table == Screen.staff) {
+      recordSnapshot = await _staffPrefFolder.find(await _db);
+    } else if (table == Screen.student) {
+      recordSnapshot = await _studentPrefFolder.find(await _db);
+    } else {
+      recordSnapshot = await _coursePrefFolder.find(await _db);
+    }
+    var recordList = recordSnapshot.map((snapshot) {
+      final data = CoursesObj.fromJson(snapshot.value);
+      return data;
+    }).toList();
+    return recordList.last.id;
+  }
   ///// SELECT END
   /*
   //

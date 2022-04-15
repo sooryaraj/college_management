@@ -1,6 +1,7 @@
 import 'package:college_management/controllers/CourseScreenController.dart';
 import 'package:college_management/controllers/StaffScreenController.dart';
 import 'package:college_management/controllers/StudentScreenController.dart';
+import 'package:college_management/utils/enums.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -35,7 +36,7 @@ class Utils {
   }
 
   static PreferredSizeWidget customAppBar(
-      {required String title, required String page}) {
+      {required String title, required Screen page}) {
     return AppBar(
       automaticallyImplyLeading: false,
       toolbarHeight: 100,
@@ -63,13 +64,13 @@ class Utils {
                   ),
                   child: TextField(
                     onChanged: (q) {
-                      if (page == 'staff') {
+                      if (page == Screen.course) {
                         _staffScreenControler.loadCourseDetailsFromLocal(
                             where: q);
-                      } else if (page == 'student') {
+                      } else if (page == Screen.student) {
                         _studentScreenController.loadStudentDetailsFromLocal(
                             where: q);
-                      } else if (page == 'course') {
+                      } else if (page == Screen.course) {
                         _courseScreenController.loadCourseDetailsFromLocal(
                             where: q);
                       }

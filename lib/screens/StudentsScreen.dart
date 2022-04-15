@@ -1,5 +1,6 @@
 import 'package:college_management/controllers/StudentScreenController.dart';
 import 'package:college_management/models/StudentObj.dart';
+import 'package:college_management/screens/AddStudentScreen.dart';
 import 'package:college_management/utils/Utils.dart';
 import 'package:college_management/utils/constant.dart';
 import 'package:college_management/utils/enums.dart';
@@ -30,9 +31,9 @@ class StudentsScreen extends StatelessWidget {
                     child: FloatingActionButton.small(
                       heroTag: "left",
                       onPressed: () {
-                        Utils.displaySnackBar("filter button pressed");
+                        _studentScreenController.loadStudentDetailsFromLocal();
                       },
-                      child: const Icon(Icons.filter_alt),
+                      child: const Icon(Icons.refresh),
                     ),
                   ),
                 ),
@@ -43,7 +44,7 @@ class StudentsScreen extends StatelessWidget {
                     child: FloatingActionButton.small(
                       heroTag: "right",
                       onPressed: () {
-                        Utils.displaySnackBar("add button pressed");
+                        Get.to(() => const AddStudentScreen());
                       },
                       child: const Icon(Icons.add),
                     ),
@@ -51,8 +52,8 @@ class StudentsScreen extends StatelessWidget {
                 ),
               ],
             ),
-            appBar:
-                Utils.customAppBar(title: 'Students Details', page: 'student'),
+            appBar: Utils.customAppBar(
+                title: 'Students Details', page: Screen.student),
             body: const StaffDetailsTileHeader(),
           ),
         ));
@@ -167,7 +168,7 @@ class _StaffDetailsViewState extends State<StaffDetailsView> {
           strokeWidth: 3,
           triggerMode: RefreshIndicatorTriggerMode.onEdge,
           onRefresh: () async {
-            _studentScreenController.loadStudentDetails();
+            _studentScreenController.loadStudentDetails(reset: true);
           },
           child: ListView.builder(
             padding: const EdgeInsets.only(bottom: 70),
@@ -215,7 +216,9 @@ class StudentDetailsTile extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Utils.tileText(
-                  text: data.id!, width: width * 0.07, color: Colors.black),
+                  text: data.id ?? "",
+                  width: width * 0.07,
+                  color: Colors.black),
               Utils.tileText(
                   text: data.studentName ?? "",
                   width: width * 0.10,
