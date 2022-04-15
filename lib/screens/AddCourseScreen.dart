@@ -98,9 +98,6 @@ class StudentsForm extends StatelessWidget {
                       textInputAction: TextInputAction.next,
                       controller:
                           AddCourseController.courseNameTextFieldController,
-                      onChanged: (value) {
-                        _addCourseController.courseNameTxt.value = value;
-                      },
                       // The validator receives the text that the user has entered.
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -131,9 +128,7 @@ class StudentsForm extends StatelessWidget {
                       textInputAction: TextInputAction.next,
                       controller:
                           AddCourseController.staffNameTextFieldController,
-                      onChanged: (value) {
-                        _addCourseController.staffNameTxt.value = value;
-                      },
+
                       // The validator receives the text that the user has entered.
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -164,9 +159,6 @@ class StudentsForm extends StatelessWidget {
                       textInputAction: TextInputAction.done,
                       controller:
                           AddCourseController.sectionNameTextFieldController,
-                      onChanged: (value) {
-                        _addCourseController.noSectionTxt.value = value;
-                      },
                       // The validator receives the text that the user has entered.
                       validator: (value) {
                         if (value == null || value.isEmpty) {

@@ -10,10 +10,6 @@ class AddStaffScreenControler extends GetxController {
   static final emailTextFieldController = TextEditingController();
   static final phoneTextFieldController = TextEditingController();
 
-  var staffNameTxt = "".obs;
-  var phoneTxt = "".obs;
-  var qualificationTxt = "".obs;
-  var emailTxt = "".obs;
   var dao = LocalDatabaseDao();
 
   Future<void> addStudentDetail() async {
@@ -22,10 +18,10 @@ class AddStaffScreenControler extends GetxController {
     id = id + 1;
     var _staffObj = StaffObj(
         id: id.toString(),
-        staffName: staffNameTxt.value,
-        qualification: qualificationTxt.value,
-        phone: phoneTxt.value,
-        email: emailTxt.value);
+        staffName: staffNameTextFieldController.value.text,
+        qualification: qualificationTextFieldController.value.text,
+        phone: phoneTextFieldController.value.text,
+        email: emailTextFieldController.value.text);
     _staffObjArr.add(_staffObj);
     print(_staffObj.toJson());
     dao.insertStaffList(_staffObjArr).then((value) => reset());
@@ -36,9 +32,5 @@ class AddStaffScreenControler extends GetxController {
     qualificationTextFieldController.clear();
     emailTextFieldController.clear();
     phoneTextFieldController.clear();
-    staffNameTxt.value = "";
-    phoneTxt.value = "";
-    qualificationTxt.value = "";
-    emailTxt.value = "";
   }
 }

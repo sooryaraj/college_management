@@ -15,13 +15,6 @@ class AddStudentController extends GetxController {
   static final aadharTextFieldController = TextEditingController();
   static final addressTextFieldController = TextEditingController();
 
-  var studentNameTxt = "".obs;
-  var fatherNameTxt = "".obs;
-  var emailTxt = "".obs;
-  var departmentTxt = "".obs;
-  var addharcardNoTxt = "".obs;
-  var joiningDateTxt = "".obs;
-  var addressTxt = "".obs;
   var dao = LocalDatabaseDao();
   Future<void> joiningDatePressed() async {
     DateTime selectedDate = DateTime.now();
@@ -34,7 +27,6 @@ class AddStudentController extends GetxController {
       joiningDate.value = Jiffy(picked).format("yyyy-MM-dd");
       selectedDate = picked;
       joiningDateTextFieldController.text = joiningDate.value;
-      joiningDateTxt.value = joiningDate.value;
     }
   }
 
@@ -44,13 +36,13 @@ class AddStudentController extends GetxController {
     id = id + 1;
     var _studObj = StudentObj(
         id: id.toString(),
-        studentName: studentNameTxt.value,
-        fatherName: fatherNameTxt.value,
-        email: emailTxt.value,
-        department: departmentTxt.value,
-        addharcardNo: addharcardNoTxt.value,
-        joiningDate: joiningDateTxt.value,
-        address: addressTxt.value);
+        studentName: studentNameTextFieldController.value.text,
+        fatherName: fatherNameTextFieldController.value.text,
+        email: emailTextFieldController.value.text,
+        department: departmentTextFieldController.value.text,
+        addharcardNo: aadharTextFieldController.value.text,
+        joiningDate: joiningDateTextFieldController.value.text,
+        address: addressTextFieldController.value.text);
     print(_studObj.toJson());
     _studObjArr.add(_studObj);
     dao.insertStudentList(_studObjArr).then((value) => reset());
@@ -64,13 +56,5 @@ class AddStudentController extends GetxController {
     departmentTextFieldController.clear();
     addressTextFieldController.clear();
     joiningDateTextFieldController.clear();
-
-    studentNameTxt.value = "";
-    fatherNameTxt.value = "";
-    emailTxt.value = "";
-    departmentTxt.value = "";
-    addharcardNoTxt.value = "";
-    joiningDateTxt.value = "";
-    addressTxt.value = "";
   }
 }

@@ -47,11 +47,6 @@ class AddStaffScreen extends StatelessWidget {
                             backgroundColor: Colors.green.shade700,
                             heroTag: "right",
                             onPressed: () {
-                              _addStaffScreenControler.emailTxt.value =
-                                  AddStaffScreenControler
-                                      .emailTextFieldController.text;
-                              print(_addStaffScreenControler.emailTxt.value);
-                              ;
                               if (_formKey.currentState!.validate()) {
                                 _addStaffScreenControler.addStudentDetail();
 
@@ -105,9 +100,6 @@ class StudentsForm extends StatelessWidget {
                       controller:
                           AddStaffScreenControler.staffNameTextFieldController,
                       // The validator receives the text that the user has entered.
-                      onChanged: (value) {
-                        _addStaffScreenControler.staffNameTxt.value = value;
-                      },
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Please enter staff name';
@@ -137,9 +129,7 @@ class StudentsForm extends StatelessWidget {
                       textInputAction: TextInputAction.next,
                       controller: AddStaffScreenControler
                           .qualificationTextFieldController,
-                      onChanged: (value) {
-                        _addStaffScreenControler.qualificationTxt.value = value;
-                      },
+
                       // The validator receives the text that the user has entered.
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -170,10 +160,6 @@ class StudentsForm extends StatelessWidget {
                       textInputAction: TextInputAction.next,
                       controller:
                           AddStaffScreenControler.emailTextFieldController,
-                      onChanged: (value) {
-                        _addStaffScreenControler.emailTxt.value = value;
-                        print(_addStaffScreenControler.emailTxt.value);
-                      },
                       // The validator receives the text that the user has entered.
                       validator: (value) {
                         if (value == null || value.isEmpty) {

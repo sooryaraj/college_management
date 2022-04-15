@@ -20,9 +20,9 @@ class AddCourseController extends GetxController {
     id = id + 1;
     var _courseObj = CoursesObj(
         id: id.toString(),
-        courseName: courseNameTxt.value,
-        staffName: staffNameTxt.value,
-        noSection: noSectionTxt.value);
+        courseName: courseNameTextFieldController.value.text,
+        staffName: sectionNameTextFieldController.value.text,
+        noSection: staffNameTextFieldController.value.text);
     print(_courseObj.toJson());
     _courseObjArr.add(_courseObj);
     dao.insertCourseList(_courseObjArr).then((value) => reset());

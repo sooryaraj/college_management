@@ -50,7 +50,6 @@ class AddStudentScreen extends StatelessWidget {
                             onPressed: () {
                               if (_formKey.currentState!.validate()) {
                                 _addStudentController.addStudentDetail();
-                                Utils.displaySnackBar("Submit button pressed");
                                 Utils.displaySnackBar("Student Added");
                               }
                             },
@@ -103,9 +102,6 @@ class _StudentsFormState extends State<StudentsForm> {
                     ),
                     child: TextFormField(
                       textInputAction: TextInputAction.next,
-                      onChanged: (value) {
-                        _addStudentController.studentNameTxt.value = value;
-                      },
                       controller:
                           AddStudentController.studentNameTextFieldController,
                       // The validator receives the text that the user has entered.
@@ -136,9 +132,7 @@ class _StudentsFormState extends State<StudentsForm> {
                     ),
                     child: TextFormField(
                       textInputAction: TextInputAction.next,
-                      onChanged: (value) {
-                        _addStudentController.fatherNameTxt.value = value;
-                      },
+
                       controller:
                           AddStudentController.fatherNameTextFieldController,
                       // The validator receives the text that the user has entered.
@@ -169,9 +163,7 @@ class _StudentsFormState extends State<StudentsForm> {
                     ),
                     child: TextFormField(
                       textInputAction: TextInputAction.next,
-                      onChanged: (value) {
-                        _addStudentController.emailTxt.value = value;
-                      },
+
                       controller: AddStudentController.emailTextFieldController,
                       // The validator receives the text that the user has entered.
                       validator: (value) {
@@ -203,9 +195,7 @@ class _StudentsFormState extends State<StudentsForm> {
                     ),
                     child: TextFormField(
                       textInputAction: TextInputAction.next,
-                      onChanged: (value) {
-                        _addStudentController.studentNameTxt.value = value;
-                      },
+
                       controller:
                           AddStudentController.departmentTextFieldController,
                       // The validator receives the text that the user has entered.
@@ -236,9 +226,6 @@ class _StudentsFormState extends State<StudentsForm> {
                     ),
                     child: TextFormField(
                       textInputAction: TextInputAction.next,
-                      onChanged: (value) {
-                        _addStudentController.addharcardNoTxt.value = value;
-                      },
                       keyboardType: TextInputType.number,
                       controller:
                           AddStudentController.aadharTextFieldController,
@@ -270,9 +257,6 @@ class _StudentsFormState extends State<StudentsForm> {
                     ),
                     child: TextFormField(
                       textInputAction: TextInputAction.done,
-                      onChanged: (value) {
-                        _addStudentController.addressTxt.value = value;
-                      },
                       controller:
                           AddStudentController.addressTextFieldController,
                       // The validator receives the text that the user has entered.
