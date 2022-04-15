@@ -34,7 +34,6 @@ class AddStudentScreen extends StatelessWidget {
                             heroTag: "left",
                             onPressed: () {
                               _addStudentController.reset();
-                              Utils.displaySnackBar("Reset button pressed");
                             },
                             label: const Text("Reset"),
                           ),
